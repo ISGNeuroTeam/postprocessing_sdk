@@ -13,23 +13,28 @@ class WRITECommand(BaseCommand):
     syntax = Syntax(
         [
             Positional("filename", required=True, otl_type=OTLType.TEXT),
-            Keyword("type", required=True, otl_type=OTLType.TEXT),
+            Keyword("type", required=False, otl_type=OTLType.TEXT),
         ],
         use_timewindow=False # if true keyword argument 'tws' and 'twf' will be added
     )
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        filename = self.get_arg("filename").value
-        type = self.get_arg("type").value
 
+        filename = self.get_arg("filename").value
+        type = self.get_arg("type").value or filename.split('.')[-1]
+
+        storage = self.storage
+
+        self.log_progress(f'Start writing to {storage}/{filename}', stage=1, total_stages=2)
         if type == 'parquet':
             df.to_parquet(
-                f'data/{filename}', engine='pyarrow', compression=None
+                f'{storage}/{filename}', engine='pyarrow', compression=None
             )
         elif type == 'json':
             df.to_json(
-                f'data/{filename}', orient='records', lines=True
+                f'{storage}/{filename}', orient='records', lines=True
             )
         else:
             raise ValueError('Unknown type')
+        self.log_progress(f'Writing is done {storage}/{filename}', stage=2, total_stages=2)
         return df
