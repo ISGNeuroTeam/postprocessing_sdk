@@ -1,0 +1,9 @@
+[submodule "pp_cmd_reps/pp_cmd_rename"]
+	path = pp_cmd_reps/pp_cmd_rename
+	url = git@github.com:ISGNeuroTeam/pp_cmd_rename.git
+[submodule "pp_cmd_reps/pp_cmd_orderby"]
+	path = pp_cmd_reps/pp_cmd_orderby
+	url = git@github.com:ISGNeuroTeam/pp_cmd_orderby.git
+[submodule "pp_cmd_reps/pp_cmd_head"]
+	path = pp_cmd_reps/pp_cmd_head
+	url = git@github.com:ISGNeuroTeam/pp_cmd_head.git
