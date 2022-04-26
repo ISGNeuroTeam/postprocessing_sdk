@@ -58,7 +58,10 @@ setup(
         'templates/*', 'templates/*/*', 'templates/*/*/*',
     ]},
     entry_points={
-        'console_scripts': ['pp_sdk=postprocessing_sdk.__main__:main'],
+        'console_scripts': [
+            'pp_sdk=postprocessing_sdk.__main__:main',
+            'pp=postprocessing_sdk.commands.pp:main'
+        ],
     },
     zip_safe=False,
     install_requires=requirements,
