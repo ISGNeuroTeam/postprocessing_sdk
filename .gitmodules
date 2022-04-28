@@ -7,3 +7,6 @@
 [submodule "pp_cmd_reps/pp_cmd_head"]
 	path = pp_cmd_reps/pp_cmd_head
 	url = git@github.com:ISGNeuroTeam/pp_cmd_head.git
+[submodule "pp_cmd_reps/otl_v1"]
+	path = pp_cmd_reps/otl_v1
+	url = git@github.com:ISGNeuroTeam/otl_v1_compatibility_command.git

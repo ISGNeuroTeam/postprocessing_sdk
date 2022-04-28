@@ -44,6 +44,8 @@ class Command(BaseCommand):
         while True:
             print('>>>', end='')
             otl_query = input()
+            if otl_query == '\q' or otl_query == 'exit':
+                exit(0)
             self.run_otl(otl_query, storage, commands_dir)
 
     def run_otl(self, otl_query, storage, commands_dir):
@@ -54,20 +56,42 @@ class Command(BaseCommand):
         }
 
         command_executor = CommandExecutor(storages, commands_dir, self.progress_notifier)
+        # set dev storage for all user commands
         for command_class in command_executor.command_classes.keys():
             setattr(command_executor.command_classes[command_class], 'storage', storage)
 
+        # read otl_v2 config  from current directory
+        if 'otl_v1' in command_executor.command_classes:
+            otl_v1_command = command_executor.command_classes.command_classes['otl_v1']
+            otl_v1_dict_conf = {
+                'spark': {
+                    'base_address': 'http://localhost',
+                    'username': 'admin',
+                    'password': '12345678',
+                },
+                'caching': {
+                    'login_cache_ttl': 86400,
+                    'default_request_cache_ttl': 100,
+                    'default_job_timeout': 100,
+                }
+            }
+            otl_v1_command.config.read_dict(otl_v1_dict_conf)
+            otl_v1_command.config.read('otl_v1_config.ini')
+
         syntax = command_executor.get_command_syntax()
         o = OTL(syntax)
-        commands = o.translate(otl_query)
-        commands = list(
-            map(
-                lambda command: command.to_dict(),
-                commands
+        try:
+            commands = o.translate(otl_query)
+            commands = list(
+                map(
+                    lambda command: command.to_dict(),
+                    commands
+                )
             )
-        )
-        df = command_executor.execute(commands)
-        print(df)
+            df = command_executor.execute(commands)
+            print(df)
+        except Exception as err:
+            print(err)
 
     @staticmethod
     def progress_notifier(
@@ -86,9 +110,8 @@ class Command(BaseCommand):
 
 
 def main():
-
     command = Command()
-    command.run_from_argv(sys.argv)
+    command.run_from_argv(['', 'pp'] + sys.argv[1:])
 
 
 if __name__ == '__main__':
