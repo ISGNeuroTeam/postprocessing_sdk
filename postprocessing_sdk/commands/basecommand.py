@@ -4,6 +4,10 @@ import os
 from pathlib import Path
 from argparse import ArgumentParser, HelpFormatter
 
+POST_PROC_SRC_DIR = Path(__file__).resolve().parent.parent
+POST_PROC_COMMAND_DIR_NAME = 'pp_cmd'
+POST_PROC_COMMAND_DIR = POST_PROC_SRC_DIR / POST_PROC_COMMAND_DIR_NAME
+
 
 class CommandError(Exception):
     """

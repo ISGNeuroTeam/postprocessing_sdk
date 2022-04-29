@@ -1,8 +1,11 @@
 import os
+import sys
 from pathlib import Path
-from .basecommand import BaseCommand, CommandError
-
+from .basecommand import BaseCommand, CommandError,  POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
+from .createcommandlinks import create_command_links
 from jinja2 import Template
+
+
 
 
 class Command(BaseCommand):
@@ -18,7 +21,7 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             'dir',
-            help='Directory for repo', default=None
+            help='Directory for repo', default=None, nargs='?'
         )
 
     @staticmethod
@@ -52,6 +55,15 @@ class Command(BaseCommand):
         }
         self.render_dir(command_template_dir, repo_dir / command_name, context)
 
+        # create links on all commands and create ling on current command
+        print('Create commands directory')
+        pp_cmd_dir = (repo_dir / command_name / POST_PROC_COMMAND_DIR_NAME)
+        create_command_links(pp_cmd_dir)
+        pp_cmd_dir.mkdir(parents=True, exist_ok=True)
+
+        # create relative link to current program
+        os.symlink(repo_dir / command_name, pp_cmd_dir / command_name)
+
         print(f'Command repo with name {command_name} created')
 
     def render_dir(self, template_directory_path, command_directory_path, context):
@@ -81,4 +93,11 @@ class Command(BaseCommand):
         rendered_file.write_text(Template(template_file.read_text()).render(context))
 
 
+def main():
+    command = Command()
+    command.run_from_argv(['', 'createcommandrepo'] + sys.argv[1:])
+
+
+if __name__ == '__main__':
+    main()
 

@@ -60,7 +60,8 @@ setup(
     entry_points={
         'console_scripts': [
             'pp_sdk=postprocessing_sdk.__main__:main',
-            'pp=postprocessing_sdk.commands.pp:main'
+            'pp=postprocessing_sdk.commands.pp:main',
+            'pp_create_cmd=postprocessing_sdk.commands.createcommandrepo:main',
         ],
     },
     zip_safe=False,

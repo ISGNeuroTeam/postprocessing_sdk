@@ -3,11 +3,7 @@ from pathlib import Path
 from otlang.otl import OTL
 from pp_exec_env.command_executor import CommandExecutor
 
-from .basecommand import BaseCommand, CommandError
-
-POST_PROC_SRC_DIR = Path(__file__).resolve().parent.parent
-
-POST_PROC_COMMAND_DIR = POST_PROC_SRC_DIR / 'pp_cmd'
+from .basecommand import BaseCommand, CommandError, POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
 
 
 class Command(BaseCommand):
@@ -34,7 +30,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         otl_query = options['otl_query']
         storage = options['storage'] or 'storage'
-        commands_dir = options['commands_dir'] or POST_PROC_COMMAND_DIR
+        commands_dir = options['commands_dir']
+
+        if commands_dir:
+            if Path('pp _cmd').exists():
+                commands_dir = POST_PROC_COMMAND_DIR_NAME
+            else:
+                commands_dir = POST_PROC_COMMAND_DIR
+
         if otl_query is None:
             self.repl(storage, commands_dir)
         else:
@@ -76,7 +79,8 @@ class Command(BaseCommand):
                 }
             }
             otl_v1_command.config.read_dict(otl_v1_dict_conf)
-            otl_v1_command.config.read('otl_v1_config.ini')
+            if Path('otl_v1_config.ini').exists():
+                otl_v1_command.config.read('otl_v1_config.ini')
 
         syntax = command_executor.get_command_syntax()
         o = OTL(syntax)
