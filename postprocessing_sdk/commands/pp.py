@@ -31,6 +31,7 @@ class Command(BaseCommand):
         otl_query = options['otl_query']
         storage = options['storage'] or 'storage'
         commands_dir = options['commands_dir']
+        Path(storage).mkdir(parents=True, exist_ok=True)
 
         if not commands_dir:
             if Path('pp _cmd').exists():
