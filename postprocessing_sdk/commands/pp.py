@@ -1,4 +1,6 @@
 import sys
+import readline
+
 from pathlib import Path
 from otlang.otl import OTL
 from pp_exec_env.command_executor import CommandExecutor
@@ -49,8 +51,7 @@ class Command(BaseCommand):
         print(f'Commmands directory is {commands_dir}')
 
         while True:
-            print('>>>', end='')
-            otl_query = input()
+            otl_query = input('query: ')
             if otl_query == '\q' or otl_query == 'exit':
                 exit(0)
             self.run_otl(otl_query, storage, commands_dir)
