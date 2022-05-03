@@ -6,8 +6,6 @@ from .createcommandlinks import create_command_links
 from jinja2 import Template
 
 
-
-
 class Command(BaseCommand):
     """
     Management utility to create postprocessing command repo

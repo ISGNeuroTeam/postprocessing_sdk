@@ -8,7 +8,8 @@ def create_command_links(directory):
     pp_cmd_dir = (directory / POST_PROC_COMMAND_DIR_NAME)
     pp_cmd_dir.mkdir(parents=True, exist_ok=True)
     for cmd_dir in POST_PROC_COMMAND_DIR.iterdir():
-        if cmd_dir.is_dir():
+        if cmd_dir.is_dir() and cmd_dir.name != '__pycache__':
+            print(f'Link to command {cmd_dir.name}')
             os.symlink(cmd_dir, pp_cmd_dir / cmd_dir.name)
 
 

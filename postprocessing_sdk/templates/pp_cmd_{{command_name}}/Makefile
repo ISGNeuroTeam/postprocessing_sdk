@@ -33,7 +33,7 @@ make_build:
 	mkdir make_build
 	cp -R ./{{command_name}} make_build
 	cp *.md make_build/{{command_name}}/
-	cp *.py make_build/{{command_name}}/
+
 
 
 clean_build:
@@ -43,15 +43,33 @@ venv:
 	echo Create venv;
 	conda create --copy -p ./venv -y
 	conda install -p ./venv python==3.9.7 -y
-	./venv/bin/pip install --no-input  postprocessing_sdk @ git+ssh://git@github.com:ISGNeuroTeam/postprocessing_sdk.git@develop
+	./venv/bin/pip install --no-input  postprocessing_sdk@git+ssh://git@github.com/ISGNeuroTeam/postprocessing_sdk.git@develop
+
+clean_venv:
+	rm -rf ./venv
 
 pp_cmd: venv
-	./venv/bin/python3/pp_sdk createcommandlinks
+	./venv/bin/pp_sdk createcommandlinks
 
-dev: pp_cmd
+otl_v1_config.ini:
+	echo -e "[spark]\n\
+base_address = http://localhost\n\
+username = admin\n\
+password = 12345678\n\
+\n\
+[caching]\n\
+# 24 hours in seconds\n\
+login_cache_ttl = 86400\n\
+# Command syntax defaults\n\
+default_request_cache_ttl = 100\n\
+default_job_timeout = 100\n\
+" > $@
+
+
+dev: pp_cmd otl_v1_config.ini
 	ln -s -r ./{{command_name}} pp_cmd/{{command_name}}
 
-clean: clean_build clean_pack clean_test
+clean: clean_build clean_pack clean_test clean_venv
 
 test:
 	@echo "Testing..."
