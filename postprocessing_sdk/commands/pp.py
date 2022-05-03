@@ -32,7 +32,7 @@ class Command(BaseCommand):
         storage = options['storage'] or 'storage'
         commands_dir = options['commands_dir']
 
-        if commands_dir:
+        if not commands_dir:
             if Path('pp _cmd').exists():
                 commands_dir = POST_PROC_COMMAND_DIR_NAME
             else:
@@ -44,6 +44,9 @@ class Command(BaseCommand):
             self.run_otl(otl_query, storage, commands_dir)
 
     def repl(self, storage, commands_dir):
+        print(f'Storage directory is {storage}')
+        print(f'Commmands directory is {commands_dir}')
+
         while True:
             print('>>>', end='')
             otl_query = input()
@@ -65,7 +68,7 @@ class Command(BaseCommand):
 
         # read otl_v2 config  from current directory
         if 'otl_v1' in command_executor.command_classes:
-            otl_v1_command = command_executor.command_classes.command_classes['otl_v1']
+            otl_v1_command = command_executor.command_classes['otl_v1']
             otl_v1_dict_conf = {
                 'spark': {
                     'base_address': 'http://localhost',

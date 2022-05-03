@@ -43,9 +43,6 @@ package_dir_option = {
 
 package_dir_option.update(get_pp_cmd_package_dir_option())
 
-print(package_dir_option)
-print([str(key) for key in package_dir_option.keys()])
-
 setup(
     name='postprocessing_sdk',
     version='0.1.0',
