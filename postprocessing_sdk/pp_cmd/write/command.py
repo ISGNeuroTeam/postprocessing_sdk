@@ -24,6 +24,8 @@ class WRITECommand(BaseCommand):
         type = self.get_arg("type").value or filename.split('.')[-1]
 
         storage = self.storage
+        if df is None:
+            df = pd.DataFrame()
 
         self.log_progress(f'Start writing to {storage}/{filename}', stage=1, total_stages=2)
         if type == 'parquet':
