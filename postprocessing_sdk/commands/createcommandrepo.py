@@ -43,7 +43,6 @@ class Command(BaseCommand):
 
         self.validate_name(command_name)
 
-
         # directory with command template
         command_template_dir = self.BASE_DIR / 'templates' / 'pp_cmd_{{command_name}}'
 
@@ -53,18 +52,18 @@ class Command(BaseCommand):
             'command_name': command_name,
             'command_name_uppercase': command_name.upper()
         }
-        self.render_dir(command_template_dir, repo_dir / command_name, context)
+        command_repo = repo_dir / f'pp_cmd_{command_name}'
+        self.render_dir(command_template_dir, command_repo, context)
 
         # create links on all commands and create ling on current command
         print('Create commands directory')
-        pp_cmd_dir = (repo_dir / command_name / POST_PROC_COMMAND_DIR_NAME)
-        create_command_links(pp_cmd_dir)
-        pp_cmd_dir.mkdir(parents=True, exist_ok=True)
+        pp_cmd_dir = (command_repo / POST_PROC_COMMAND_DIR_NAME)
+        create_command_links(command_repo)
 
         # create relative link to current program
-        os.symlink(repo_dir / command_name, pp_cmd_dir / command_name)
+        os.symlink(command_repo / command_name, pp_cmd_dir / command_name)
 
-        print(f'Command repo with name {command_name} created')
+        print(f'Command repository with name {command_repo} created')
 
     def render_dir(self, template_directory_path, command_directory_path, context):
         print(f'Create directory {str(template_directory_path)}')
