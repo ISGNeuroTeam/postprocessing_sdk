@@ -36,7 +36,7 @@ class Command(BaseCommand):
         Path(storage).mkdir(parents=True, exist_ok=True)
 
         if not commands_dir:
-            if Path('pp _cmd').exists():
+            if Path('pp_cmd').exists():
                 commands_dir = POST_PROC_COMMAND_DIR_NAME
             else:
                 commands_dir = POST_PROC_COMMAND_DIR
@@ -47,8 +47,8 @@ class Command(BaseCommand):
             self.run_otl(otl_query, storage, commands_dir)
 
     def repl(self, storage, commands_dir):
-        print(f'Storage directory is {storage}')
-        print(f'Commmands directory is {commands_dir}')
+        print(f'Storage directory is {Path(storage).resolve()}')
+        print(f'Commmands directory is {Path(commands_dir).resolve()}')
 
         while True:
             otl_query = input('query: ')
