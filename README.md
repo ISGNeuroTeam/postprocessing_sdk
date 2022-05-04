@@ -18,15 +18,15 @@ conda install -p ./venv python==3.9.7 -y
 Three shell commands are available:
 1. Creates `pp_cmd` directory in current directory with postprocessing command links in it 
 ```bash
-python ./postprocessing_sdk/__main__.py createcommandlinks
+python -m postprocessing_sdk createcommandlinks
 ```
 2. Creates new command repository
 ```bash
-python ./postprocessing_sdk/__main__.py createcommandrepo <command name>
+python -m postprocessing_sdk createcommandrepo <command name>
 ```
 3. Post-processing interpreter
 ```bash
-python ./postprocessing_sdk/__main__.py pp 
+python -m postprocessing_sdk pp 
 ```
 
 ## Creating new post-processing command
