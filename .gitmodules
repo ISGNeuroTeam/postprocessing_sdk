@@ -1,12 +1,12 @@
 [submodule "pp_cmd_reps/pp_cmd_rename"]
 	path = pp_cmd_reps/pp_cmd_rename
-	url = git@github.com:ISGNeuroTeam/pp_cmd_rename.git
+	url = ../pp_cmd_rename.git
 [submodule "pp_cmd_reps/pp_cmd_orderby"]
 	path = pp_cmd_reps/pp_cmd_orderby
-	url = git@github.com:ISGNeuroTeam/pp_cmd_orderby.git
+	url = ../pp_cmd_orderby.git
 [submodule "pp_cmd_reps/pp_cmd_head"]
 	path = pp_cmd_reps/pp_cmd_head
-	url = git@github.com:ISGNeuroTeam/pp_cmd_head.git
+	url = ../pp_cmd_head.git
 [submodule "pp_cmd_reps/otl_v1"]
 	path = pp_cmd_reps/otl_v1
-	url = git@github.com:ISGNeuroTeam/otl_v1_compatibility_command.git
+	url = ../otl_v1_compatibility_command.git
