@@ -52,7 +52,7 @@ setup(
     package_dir=package_dir_option,
     packages=[str(key) for key in package_dir_option.keys()],
     package_data={'postprocessing_sdk': [
-        'templates/*', 'templates/*/*', 'templates/*/*/*',
+        'templates/*', 'templates/*/*', 'templates/*/*/*', 'templates/pp_cmd_{{command_name}}/.gitignore'
     ]},
     entry_points={
         'console_scripts': [
