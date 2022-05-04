@@ -11,7 +11,7 @@ SDK for creating postprocessing commands
 ```bash
 conda create -p ./venv -y
 conda install -p ./venv python==3.9.7 -y
-./venv/bin/python3 ./venv/bin/pip install -r /work/postprocessing_sdk/requirements.txt 
+./venv/bin/python3 ./venv/bin/pip install -r ./requirements.txt 
 ```
 
 ### Available shell commands
