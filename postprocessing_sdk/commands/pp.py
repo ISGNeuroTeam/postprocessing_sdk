@@ -1,6 +1,7 @@
 import sys
 import readline
 
+from pprint import pp
 from pathlib import Path
 from otlang.otl import OTL
 from pp_exec_env.command_executor import CommandExecutor
@@ -41,6 +42,8 @@ class Command(BaseCommand):
             else:
                 commands_dir = POST_PROC_COMMAND_DIR
 
+        self._create_command_executor(storage, commands_dir)
+
         if otl_query is None:
             self.repl(storage, commands_dir)
         else:
@@ -54,7 +57,24 @@ class Command(BaseCommand):
             otl_query = input('query: ')
             if otl_query == '\q' or otl_query == 'exit':
                 exit(0)
-            self.run_otl(otl_query, storage, commands_dir)
+            if otl_query == '\?' or otl_query == 'help':
+                self.print_help()
+            else:
+                self.run_otl(otl_query, storage, commands_dir)
+
+    def _create_command_executor(self, storage, commands_dir):
+        storages = {
+            'shared_post_processing': storage,
+            'local_post_processing': storage,
+            'interproc_storage': storage,
+        }
+        self.command_executor = CommandExecutor(storages, commands_dir, self.progress_notifier)
+
+    def print_help(self):
+        syntax = self.command_executor.get_command_syntax()
+        for command, command_syntax_dict in syntax.items():
+            print(f'{command}:')
+            pp(command_syntax_dict)
 
     def run_otl(self, otl_query, storage, commands_dir):
         storages = {
@@ -63,7 +83,7 @@ class Command(BaseCommand):
             'interproc_storage': storage,
         }
 
-        command_executor = CommandExecutor(storages, commands_dir, self.progress_notifier)
+        command_executor = self.command_executor
         # set dev storage for all user commands
         for command_class in command_executor.command_classes.keys():
             setattr(command_executor.command_classes[command_class], 'storage', storage)
