@@ -1,9 +1,11 @@
 import sys
+import traceback
 import readline
 
 from pprint import pp
 from pathlib import Path
 from otlang.otl import OTL
+from otlang.exceptions import OTLException
 from pp_exec_env.command_executor import CommandExecutor
 
 from .basecommand import BaseCommand, CommandError, POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
@@ -110,7 +112,12 @@ class Command(BaseCommand):
         syntax = command_executor.get_command_syntax()
         o = OTL(syntax)
         try:
-            commands = o.translate(otl_query)
+            try:
+                commands = o.translate(otl_query)
+            except OTLException as err:
+                print('Translation error')
+                print(err)
+                return
             commands = list(
                 map(
                     lambda command: command.to_dict(),
@@ -120,7 +127,8 @@ class Command(BaseCommand):
             df = command_executor.execute(commands)
             print(df)
         except Exception as err:
-            print(err)
+            tb = traceback.format_exc()
+            print(tb)
 
     @staticmethod
     def progress_notifier(
