@@ -10,3 +10,9 @@
 [submodule "pp_cmd_reps/otl_v1"]
 	path = pp_cmd_reps/otl_v1
 	url = ../otl_v1_compatibility_command.git
+[submodule "pp_cmd_reps/pp_cmd_fields"]
+	path = pp_cmd_reps/pp_cmd_fields
+	url = ../pp_cmd_fields.git
+[submodule "pp_cmd_reps/pp_cmd_str_match"]
+	path = pp_cmd_reps/pp_cmd_str_match
+	url = ../pp_cmd_str_match.git
