@@ -3,7 +3,7 @@ pandas==1.4.1
 numpy==1.21.3
 pyarrow==7.0.0
 threadpoolctl==3.1.0
-otlang @ git+ssh://git@github.com/ISGNeuroTeam/otlang-proto.git@5850922b33f754b9675e2a5e21eb206ff6d9a2db
+otlang @ git+ssh://git@github.com/ISGNeuroTeam/otlang-proto.git@b2cda36e7b9b16a85a34a90d9c553b36dded5b0f
 execution-environment @ git+ssh://git@github.com/ISGNeuroTeam/execution_environment.git@fe552eae70afe7f1d7e59a9a68e15284cb137767
-pp-exec-env @ git+ssh://git@github.com/ISGNeuroTeam/pp_exec_env.git@d75114b36ab53e38b3497a5d5acbc8e6fb18a795
+pp-exec-env @ git+ssh://git@github.com/ISGNeuroTeam/pp_exec_env.git@96877f1aa92fd29627440a98432984f46743c266
 
