@@ -1,6 +1,8 @@
 import sys
 import traceback
 import readline
+import re
+import itertools
 
 from pprint import pp
 from pathlib import Path
@@ -9,6 +11,36 @@ from otlang.exceptions import OTLException
 from pp_exec_env.command_executor import CommandExecutor
 
 from .basecommand import BaseCommand, CommandError, POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
+
+
+readline.parse_and_bind("tab: complete")
+
+
+class Completer:
+    """
+    OTL command name completer for pp utility
+    """
+    def __init__(self, command_executor: CommandExecutor):
+        self.command_executor = command_executor
+        self.syntax = self.command_executor.get_command_syntax()
+
+    @staticmethod
+    def nth(iterable, n, default=None):
+        """
+        Returns the `n`-th item or a default value
+        See: https://docs.python.org/3/library/itertools.html#itertools-recipes
+        """
+        return next(itertools.islice(iterable, n, None), default)
+
+    def complete(self, text, state):
+        """
+        Returns `state`-th command that can be substituted in `text`
+        """
+        cmds = self.syntax.keys()
+        current = text.split("|")[-1]
+        if len(current) != 0 and re.match("\s", current[-1]) is None:
+            return Completer.nth(filter(lambda s: s.startswith(current.strip()), cmds), state, default=None)
+        return Completer.nth(cmds, state, None)
 
 
 class Command(BaseCommand):
@@ -54,6 +86,8 @@ class Command(BaseCommand):
     def repl(self, storage, commands_dir):
         print(f'Storage directory is {Path(storage).resolve()}')
         print(f'Commmands directory is {Path(commands_dir).resolve()}')
+        completer = Completer(self.command_executor)
+        readline.set_completer(completer.complete)
 
         while True:
             otl_query = input('query: ')
