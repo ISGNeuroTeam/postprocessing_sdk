@@ -46,9 +46,11 @@ class Command(BaseCommand):
 
         repo_dir = options['dir'] or os.getcwd()
         repo_dir = Path(repo_dir).resolve()
+        pascal_case = ''.join(map(str.title, command_name.split("_")))
         context = {
             'command_name': command_name,
-            'command_name_uppercase': command_name.upper()
+            'command_name_uppercase': command_name.upper(),
+            'command_class_name': f'{pascal_case}Command'
         }
         command_repo = repo_dir / f'pp_cmd_{command_name}'
         self.render_dir(command_template_dir, command_repo, context)
@@ -97,4 +99,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
