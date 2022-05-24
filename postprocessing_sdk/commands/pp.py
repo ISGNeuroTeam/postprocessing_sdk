@@ -4,7 +4,6 @@ import readline
 import re
 import itertools
 
-from pprint import pp
 from pathlib import Path
 from otlang.otl import OTL
 from otlang.exceptions import OTLException
@@ -71,7 +70,7 @@ class Command(BaseCommand):
         Path(storage).mkdir(parents=True, exist_ok=True)
 
         if not commands_dir:
-            if Path('pp_cmd').exists():
+            if Path(POST_PROC_COMMAND_DIR_NAME).exists():
                 commands_dir = POST_PROC_COMMAND_DIR_NAME
             else:
                 commands_dir = POST_PROC_COMMAND_DIR
@@ -108,17 +107,27 @@ class Command(BaseCommand):
 
     def print_help(self):
         syntax = self.command_executor.get_command_syntax()
+        print('Available OTL commands')
         for command, command_syntax_dict in syntax.items():
             print(f'{command}:')
-            pp(command_syntax_dict)
+            if 'help' in command_syntax_dict:
+                print(command_syntax_dict['help'])
+            else:
+                print(self._get_help_from_command_syntax_dict(command_syntax_dict))
+
+    @staticmethod
+    def _get_help_from_command_syntax_dict(command_syntax_dict):
+        command_help = ['\tArguments: ', ]
+        for rule in command_syntax_dict['rules']:
+            command_help.append(f"\t\t{rule['name']}")
+            for cmd_attr in ['type', 'required', 'inf', 'input_types']:
+                if cmd_attr in rule:
+                    command_help.append(f"\t\t\t{cmd_attr}: {rule[cmd_attr]}")
+        command_help.append('\tProperties:')
+        command_help.append(f"\t\tuse_timewindow: {command_syntax_dict['use_timewindow']}")
+        return '\n'.join(command_help)
 
     def run_otl(self, otl_query, storage, commands_dir):
-        storages = {
-            'shared_post_processing': storage,
-            'local_post_processing': storage,
-            'interproc_storage': storage,
-        }
-
         command_executor = self.command_executor
         # set dev storage for all user commands
         for command_class in command_executor.command_classes.keys():

@@ -1,7 +1,7 @@
 import sys
 import importlib
 
-from .commands.basecommand import CommandError
+from postprocessing_sdk.commands.basecommand import CommandError
 
 
 def main():
