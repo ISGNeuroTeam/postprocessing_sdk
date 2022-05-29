@@ -1,9 +1,9 @@
 Jinja2==3.1.1
-pandas==1.4.1
-numpy==1.21.3
+pandas==1.4.2
+numpy==1.22.4
 pyarrow==7.0.0
 threadpoolctl==3.1.0
 otlang @ git+ssh://git@github.com/ISGNeuroTeam/otlang-proto.git@b2cda36e7b9b16a85a34a90d9c553b36dded5b0f
-execution-environment @ git+ssh://git@github.com/ISGNeuroTeam/execution_environment.git@fe552eae70afe7f1d7e59a9a68e15284cb137767
-pp-exec-env @ git+ssh://git@github.com/ISGNeuroTeam/pp_exec_env.git@96877f1aa92fd29627440a98432984f46743c266
+execution-environment @ git+ssh://git@github.com/ISGNeuroTeam/execution_environment.git@d6eb9c37c1cf9288c193fdcba2d9881a42e06368
+pp-exec-env @ git+ssh://git@github.com/ISGNeuroTeam/pp_exec_env.git@252eeda32c11be3e9a31015e47ca84d184c42421
 

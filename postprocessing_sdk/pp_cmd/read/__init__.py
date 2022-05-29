@@ -1,4 +1,4 @@
-from .command import READCommand
+from .command import ReadCommand
 
 
-__all__ = ["READCommand"]
+__all__ = ["ReadCommand"]

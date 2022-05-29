@@ -4,7 +4,6 @@ from pp_exec_env.base_command import BaseCommand, Syntax
 
 
 class {{command_class_name}}(BaseCommand):
-
     # define syntax of your command here
     syntax = Syntax(
         [
@@ -13,8 +12,9 @@ class {{command_class_name}}(BaseCommand):
             Keyword("kwarg_int_double_argument", required=False, otl_type=OTLType.NUMBERIC),
             Keyword("some_kwargs", otl_type=OTLType.ALL, inf=True),
         ],
-        use_timewindow=False # if true keyword argument 'tws' and 'twf' will be added
     )
+    use_timewindow = False  # Does not require time window arguments
+    idempotent = True  # Does not invalidate cache
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         self.log_progress('Start {{command_name}} command')

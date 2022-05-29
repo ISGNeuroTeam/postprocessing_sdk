@@ -1,4 +1,4 @@
-from .command import WRITECommand
+from .command import WriteCommand
 
 
-__all__ = ["WRITECommand"]
+__all__ = ["WriteCommand"]

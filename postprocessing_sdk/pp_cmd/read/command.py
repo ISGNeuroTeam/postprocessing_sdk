@@ -8,7 +8,7 @@ from pp_exec_env.base_command import BaseCommand, Syntax
 log = logging.getLogger('pp_exec_env.r')
 
 
-class READCommand(BaseCommand):
+class ReadCommand(BaseCommand):
 
     # define syntax of your command here
     syntax = Syntax(
@@ -16,7 +16,6 @@ class READCommand(BaseCommand):
             Positional("filename", required=True, otl_type=OTLType.TEXT),
             Keyword("type", required=False, otl_type=OTLType.TEXT),
         ],
-        use_timewindow=False,
     )
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:

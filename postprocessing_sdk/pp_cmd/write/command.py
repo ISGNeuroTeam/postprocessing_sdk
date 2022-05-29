@@ -7,7 +7,7 @@ from pp_exec_env.base_command import BaseCommand, Syntax
 log = logging.getLogger('pp_exec_env.w')
 
 
-class WRITECommand(BaseCommand):
+class WriteCommand(BaseCommand):
 
     # define syntax of your command here
     syntax = Syntax(
@@ -15,7 +15,6 @@ class WRITECommand(BaseCommand):
             Positional("filename", required=True, otl_type=OTLType.TEXT),
             Keyword("type", required=False, otl_type=OTLType.TEXT),
         ],
-        use_timewindow=False # if true keyword argument 'tws' and 'twf' will be added
     )
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
