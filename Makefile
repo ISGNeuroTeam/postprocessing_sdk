@@ -61,10 +61,10 @@ clean: clean_conda remove_conda clean_dist
 
 publish: build
 ifeq ($(BRANCH), master)
-	echo "Test 1"
+	echo "Creating final distribution"
 	sed "s/{{}}//g" setup_template.py > setup.py
 else
-	echo "Test 0"
+	echo "Creating development distribution"
 	sed "s/{{}}/$(COMMIT_HASH)-dev/g" setup_template.py > setup.py
 endif
 	( \
