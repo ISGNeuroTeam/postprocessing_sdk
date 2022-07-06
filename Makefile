@@ -59,7 +59,7 @@ remove_conda:
 
 clean: clean_conda remove_conda clean_dist
 
-publish:
+publish: build
 ifeq ($(BRANCH), master)
 	echo "Test 1"
 	sed "s/{{}}//g" setup_template.py > setup.py
