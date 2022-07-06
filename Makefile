@@ -2,7 +2,6 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-VERSION := $(shell cat setup.py | grep version | head -n 1 | sed -re "s/[^\"']+//" | sed -re "s/[\"',]//g")
 BRANCH := $(shell git name-rev $$(git rev-parse HEAD) | cut -d\  -f2 | sed -re 's/^(remotes\/)?origin\///' | tr '/' '_')
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
