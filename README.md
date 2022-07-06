@@ -4,14 +4,19 @@ SDK for creating postprocessing commands
 
 ## Getting started
 ###  Prerequisites
-1. [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
+1. [Optional] [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
 
 ### Installing
-1. Create python virtual environment
+1. [Optional] Create python virtual environment. You may just use existing Python 3.9.7 if it is installed in the system.
 ```bash
 conda create -p ./venv -y
 conda install -p ./venv python==3.9.7 -y
-./venv/bin/python3 ./venv/bin/pip install -r ./requirements.txt 
+```
+2. Install postprocessing_sdk from ISGNeuro Python index
+```bash
+python3 -m pip install postprocessing_sdk \
+--extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple \
+--trusted-host s.dev.isgneuro.com
 ```
 
 ### Available shell commands
@@ -29,20 +34,15 @@ python -m postprocessing_sdk createcommandrepo <command name>
 python -m postprocessing_sdk pp 
 ```
 
+Installation will also create shortcuts like `pp` and `pp_create_cmd` as symlinks.
+
 ## Creating new post-processing command
 
-1. Install postprocessing sdk
+1. Create new repository for post-processing command. If you used conda-venv, then activate it.
 ```bash
-conda create -p ./venv -y
-conda install -p ./venv python==3.9.7 -y
-./venv/bin/python3 ./venv/bin/pip install postprocessing_sdk@git+ssh://git@github.com/ISGNeuroTeam/postprocessing_sdk.git@develop 
-```
-2. Create new repository for post-processing command
-```bash
-conda activate ./venv
 pp_create_cmd <command_name> <parent directory for repository>
 ```
-3. Go to just created command repository and configure connection to platform in `otl_v1_config.ini`. Example:
+2. Go to the command directory and configure connection to platform in `otl_v1_config.ini`. Example:
 ```ini
 [spark]
 base_address = http://localhost
@@ -68,7 +68,7 @@ log = logging.getLogger('pp_exec_env.head2')
 
 DEFAULT_NUMBER = 10
 
-class HEADCommand(BaseCommand):
+class HeadCommand(BaseCommand):
     # define syntax of your command here
     syntax = Syntax(
         [
@@ -81,11 +81,6 @@ class HEADCommand(BaseCommand):
         number = self.get_arg('number').value
         return df.head(number or DEFAULT_NUMBER)
 ```
-
-Available python packages:  
-- pandas==1.4.1
-- numpy==1.21.3
-- pyarrow==7.0.0 
 
 5. Check command execution using `pp` interpreter. Example:
 ```bash

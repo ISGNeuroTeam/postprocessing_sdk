@@ -45,7 +45,7 @@ package_dir_option.update(get_pp_cmd_package_dir_option())
 
 setup(
     name='postprocessing_sdk',
-    version='0.1.0',
+    version='0.1.{{}}0',
     description='SDK for creating postprocessing commands',
     author='Artem Zenkov',
     author_email='azenkov@isgneuro.com',

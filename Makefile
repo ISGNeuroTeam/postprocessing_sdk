@@ -4,6 +4,7 @@ endif
 
 VERSION := $(shell cat setup.py | grep version | head -n 1 | sed -re "s/[^\"']+//" | sed -re "s/[\"',]//g")
 BRANCH := $(shell git name-rev $$(git rev-parse HEAD) | cut -d\  -f2 | sed -re 's/^(remotes\/)?origin\///' | tr '/' '_')
+COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 CONDA_FOLDER = ./conda
 CONDA = $(CONDA_FOLDER)/miniconda/bin/conda
@@ -58,11 +59,17 @@ remove_conda:
 
 clean: clean_conda remove_conda clean_dist
 
-publish: build
+publish:
+ifeq ($(BRANCH), master)
+	echo "Test 1"
+	sed "s/{{}}//g" setup_template.py > setup.py
+else
+	echo "Test 0"
+	sed "s/{{}}/$(COMMIT_HASH)-dev/g" setup_template.py > setup.py
+endif
 	( \
 	. $(CONDA_FOLDER)/miniconda/bin/activate; \
 	conda activate $(ENV_NAME); \
 	python ./setup.py sdist; \
 	)
-
-
+	rm setup.py
