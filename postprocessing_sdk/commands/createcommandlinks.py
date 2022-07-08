@@ -1,23 +1,48 @@
 import os
 import sys
 from pathlib import Path
-from .basecommand import BaseCommand, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
+from postprocessing_sdk.commands.basecommand import BaseCommand, POST_PROC_COMMAND_DIR
+import importlib.util
+import pp_exec_env.base_command
 
 
 def create_command_links(directory):
-    pp_cmd_dir = (directory / POST_PROC_COMMAND_DIR_NAME)
-    pp_cmd_dir.mkdir(parents=True, exist_ok=True)
-    for cmd_dir in POST_PROC_COMMAND_DIR.iterdir():
-        if cmd_dir.is_dir() and cmd_dir.name != '__pycache__':
-            print(f'Link to command {cmd_dir.name}')
-            os.symlink(cmd_dir, pp_cmd_dir / cmd_dir.name)
+    """
+    Find all commands in the given directory and create symlinks for them.
+    """
+    print(POST_PROC_COMMAND_DIR)
+    for root, dirs, files in os.walk(directory):
+        if "__init__.py" in files:
+            module_name = Path(root).name
+            spec = importlib.util.spec_from_file_location(module_name, Path(root) / "__init__.py")
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = module
+            try:
+                spec.loader.exec_module(module)
+            except Exception as e:
+                print(f"Could not import {module_name} from {root}\n{e}")
+                continue
+
+            sys.modules.pop(spec.name)
+            if module.__dict__.get('__all__', None) is None or not module.__all__:
+                continue
+            if len(module.__all__) != 1:
+                continue
+
+            cls = module.__getattribute__(module.__all__[0])
+            if cls.__base__ == pp_exec_env.base_command.BaseCommand:
+                try:
+                    os.symlink(Path(root), POST_PROC_COMMAND_DIR / module_name, target_is_directory=True)
+                    print(f"Success: Added {module_name} command")
+                except FileExistsError:
+                    print(f"Link to {cls} already exists")
 
 
 class Command(BaseCommand):
     """
     Management utility to create postprocessing command repo
     """
-    help = 'Creates commands directory and sepecified directory and makes links to postprocessing command'
+    help = 'Creates symlinks for all commands in the given directory for the `pp` interpreter'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -37,4 +62,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
