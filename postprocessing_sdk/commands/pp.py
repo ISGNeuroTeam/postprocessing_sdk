@@ -149,6 +149,9 @@ class Command(BaseCommand):
                 }
             }
             otl_v1_command.config.read_dict(otl_v1_dict_conf)
+            if Path(POST_PROC_COMMAND_DIR / "otl_v1" / "config.ini").exists():
+                otl_v1_command.config.read(POST_PROC_COMMAND_DIR / "otl_v1" / "config.ini")
+
             if Path('otl_v1_config.ini').exists():
                 otl_v1_command.config.read('otl_v1_config.ini')
 

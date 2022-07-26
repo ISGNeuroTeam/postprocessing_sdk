@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-07-26
+### Changed
+- Changed `createcommandlinks` to create links in the package directory instead of the local one
+- Changed `createcommandrepo` to create a link to the command in the package directory
+- Bumped pp_exec_env version
+
 ## [1.0.1] - 2022-07-06
 ### Changed
 - Bumped OTLand version
@@ -14,4 +20,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 - CHANGELOG.md
-

@@ -11,6 +11,10 @@ ENV_NAME = venv
 ENV = ./$(ENV_NAME)
 ENV_PYTHON = $(ENV)/bin/python3.9
 
+DEV_STORAGE = https://storage.dev.isgneuro.com/repository/components
+PP_STDLIB = pp_stdlib
+PP_STDLIB_URL = $(DEV_STORAGE)/$(PP_STDLIB)/$(PP_STDLIB)-0.0.1-master-0002.tar.gz
+
 $(CONDA_FOLDER)/miniconda.sh :
 	echo Download Miniconda
 	mkdir -p $(CONDA_FOLDER)
@@ -25,6 +29,15 @@ $(CONDA_FOLDER)/miniconda/: $(CONDA_FOLDER)/miniconda.sh
 install_conda_pack:
 	$(CONDA) install conda-pack -c defaults -y
 
+pp_stdlib:
+	echo $(PP_STDLIB_URL)
+	echo Downloading $(PP_STDLIB)...
+	if ! [ -d ./$(PP_STDLIB) ];\
+		mkdir -p ./$(PP_STDLIB);\
+		then curl -# -Lk $(PP_STDLIB_URL) | tar -zx --strip 1 -C ./$(PP_STDLIB) && echo $(PP_STDLIB) downloaded.;\
+		else echo $(PP_STDLIB) is already downloaded.;\
+	fi
+
 create_env: $(CONDA_FOLDER)/miniconda/ install_conda_pack
 	echo Create environment
 	$(CONDA) create -p $(ENV) -y
@@ -33,9 +46,9 @@ create_env: $(CONDA_FOLDER)/miniconda/ install_conda_pack
 	--extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple \
 	--trusted-host s.dev.isgneuro.com
 
-build: create_env
+build: create_env pp_stdlib
 	echo Build
-
+	cp -fr ./$(PP_STDLIB)/* ./postprocessing_sdk/pp_cmd/
 
 test:
 	@echo 'Testing'

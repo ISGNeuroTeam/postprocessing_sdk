@@ -2,7 +2,6 @@ import os
 import sys
 from pathlib import Path
 from .basecommand import BaseCommand, CommandError,  POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
-from .createcommandlinks import create_command_links
 from jinja2 import Template
 
 
@@ -55,13 +54,8 @@ class Command(BaseCommand):
         command_repo = repo_dir / f'pp_cmd_{command_name}'
         self.render_dir(command_template_dir, command_repo, context)
 
-        # create links on all commands and create ling on current command
-        print('Create commands directory')
-        pp_cmd_dir = (command_repo / POST_PROC_COMMAND_DIR_NAME)
-        create_command_links(command_repo)
-
-        # create relative link to current program
-        os.symlink(command_repo / command_name, pp_cmd_dir / command_name)
+        # create a symlink for `pp` utility in pp_cmd
+        os.symlink(command_repo / command_name, POST_PROC_COMMAND_DIR / command_name)
 
         print(f'Command repository with name {command_repo} created')
 

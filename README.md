@@ -21,20 +21,31 @@ python3 -m pip install postprocessing_sdk \
 
 ### Available shell commands
 Three shell commands are available:
-1. Creates `pp_cmd` directory in current directory with postprocessing command links in it 
+1. Finds all commands in the current directory and its children and links them to the interpreter
 ```bash
 python -m postprocessing_sdk createcommandlinks
 ```
+or
+```bash
+pp_sdk createcommandlinks
+```
+
 2. Creates new command repository
 ```bash
 python -m postprocessing_sdk createcommandrepo <command name>
+```
+or
+```bash
+pp_create_cmd <command name>
 ```
 3. Post-processing interpreter
 ```bash
 python -m postprocessing_sdk pp 
 ```
-
-Installation will also create shortcuts like `pp` and `pp_create_cmd` as symlinks.
+or
+```bash
+pp
+```
 
 ## Creating new post-processing command
 
