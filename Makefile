@@ -13,7 +13,7 @@ ENV_PYTHON = $(ENV)/bin/python3.9
 
 DEV_STORAGE = https://storage.dev.isgneuro.com/repository/components
 PP_STDLIB = pp_stdlib
-PP_STDLIB_URL = $(DEV_STORAGE)/$(PP_STDLIB)/$(PP_STDLIB)-0.0.1-master-0002.tar.gz
+PP_STDLIB_URL = $(DEV_STORAGE)/$(PP_STDLIB)/$(PP_STDLIB)-0.0.2-master-0003.tar.gz
 
 $(CONDA_FOLDER)/miniconda.sh :
 	echo Download Miniconda
