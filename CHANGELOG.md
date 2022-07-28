@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2022-07-28
+### Changed
+- `pp_stdlib` version bump
+
 ## [1.1.0] - 2022-07-26
 ### Changed
 - Changed `createcommandlinks` to create links in the package directory instead of the local one
