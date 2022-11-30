@@ -1,2 +1,2 @@
 Jinja2==3.1.1
-pp-exec-env>=1.4.0
+pp-exec-env>=1.4.1
