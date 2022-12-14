@@ -66,9 +66,19 @@ class Command(BaseCommand):
             '--user',
             help='User unique identifier', nargs='?', default=None,
         )
+        parser.add_argument(
+            '--file', '-f',
+            help='File with otl command', nargs='?', default=None
+        )
 
     def handle(self, *args, **options):
         otl_query = options['otl_query']
+        if otl_query is None:
+            otl_file = options['file']
+            if otl_file:
+                with open(otl_file, 'r') as f:
+                    otl_query = f.read()
+
         storage = options['storage'] or 'storage'
         commands_dir = options['commands_dir']
         user_id = options['user'] or 'admin'
@@ -132,7 +142,7 @@ class Command(BaseCommand):
         command_help.append(f"\t\tuse_timewindow: {command_syntax_dict['use_timewindow']}")
         return '\n'.join(command_help)
 
-    def run_otl(self, otl_query, storage, commands_dir, platform_envs=None):
+    def run_otl(self, otl_query, storage, commands_dir=None, platform_envs=None):
         command_executor = self.command_executor
         # set dev storage for all user commands
         for command_class in command_executor.command_classes.keys():
