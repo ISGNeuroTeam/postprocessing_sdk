@@ -24,15 +24,18 @@ class ReadCommand(BaseCommand):
         type = self.get_arg("type").value or filename.split('.')[-1]
 
         storage = self.storage
+        full_file_path = Path(f'{storage}/{filename}')
         # check file exists
-        if not Path(f'{storage}/{filename}').exists():
+        if not full_file_path.exists():
             raise ValueError('File not exists')
         if type == 'json':
-            df = pd.read_json(f'{storage}/{filename}', lines=True)
+            df = pd.read_json(full_file_path, lines=True)
         elif type == 'parquet':
             df = pd.read_parquet(
-                f'{storage}/{filename}', engine='pyarrow', use_pandas_metadata=True
+                full_file_path, engine='pyarrow', use_pandas_metadata=True
             )
+        elif type == 'csv':
+            df = pd.read_csv(full_file_path)
         else:
             raise ValueError('Unknown type')
         return df

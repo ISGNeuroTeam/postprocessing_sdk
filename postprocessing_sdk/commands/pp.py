@@ -3,6 +3,7 @@ import traceback
 import readline
 import re
 import itertools
+import pandas as pd
 
 from pathlib import Path
 from otlang.otl import OTL
@@ -13,6 +14,9 @@ from .basecommand import BaseCommand, CommandError, POST_PROC_SRC_DIR, POST_PROC
 
 
 readline.parse_and_bind("tab: complete")
+
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
 
 
 class Completer:
