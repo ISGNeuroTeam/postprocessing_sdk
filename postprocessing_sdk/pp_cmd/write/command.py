@@ -35,6 +35,10 @@ class WriteCommand(BaseCommand):
             df.to_json(
                 f'{storage}/{filename}', orient='records', lines=True
             )
+        elif type == 'csv':
+            df.to_csv(
+                f'{storage}/{filename}'
+            )
         else:
             raise ValueError('Unknown type')
         self.log_progress(f'Writing is done {storage}/{filename}', stage=2, total_stages=2)
