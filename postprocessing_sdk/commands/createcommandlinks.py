@@ -47,7 +47,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             'dir',
-            help='Directory where to create command links', default=None, nargs='?'
+            help='Directory where to create command links, default is current directory', default=None, nargs='?'
         )
 
     def handle(self, *args, **options):
