@@ -13,6 +13,7 @@ package_dir_option = {
     'postprocessing_sdk.pp_cmd': 'postprocessing_sdk/pp_cmd',
     'postprocessing_sdk.pp_cmd.read': 'postprocessing_sdk/pp_cmd/read',
     'postprocessing_sdk.pp_cmd.write': 'postprocessing_sdk/pp_cmd/write',
+    'df_storage': "postprocessing_sdk/pp_cmd/read_file_venv/lib/python3.9/site-packages/df_storage/"
 }
 
 setup(
@@ -25,7 +26,7 @@ setup(
     packages=[str(key) for key in package_dir_option.keys()],
     package_data={'postprocessing_sdk': [
         'templates/*', 'templates/*/*', 'templates/*/*/*', 'templates/pp_cmd_{{command_name}}/.gitignore',
-        "pp_cmd/*/*"
+        "pp_cmd/*/*",
     ]},
     entry_points={
         'console_scripts': [
