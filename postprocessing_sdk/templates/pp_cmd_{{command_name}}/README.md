@@ -1,27 +1,66 @@
 # pp_cmd_{{command_name}}
 Postprocessing command "{{command_name}}"
+## Description
+{{command_name}} do (write here what it does)  
 
-Usage example:
-`... | {{command_name}}`
+
+### Arguments
+- first_positional_string_argument - positional argument, text, write what it means
+- kwarg_int_argument - keyword argument, integer, write what it means
+- ...
+
+### Usage example
+Show how it can be used  
+```
+... | {{command_name}} positional_arg, kwarg_int_argument=4  ...
+```
+Input dataframe example  
+Output dataframe example  
 
 ## Getting started
-###  Prerequisites
-1. [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
-
 ### Installing
 1. Create virtual environment with post-processing sdk 
 ```bash
-make dev
+    make dev
 ```
 That command  
+- downloads [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
 - creates python virtual environment with [postprocessing_sdk](https://github.com/ISGNeuroTeam/postprocessing_sdk)
-- creates `pp_cmd` directory with links to available post-processing commands
-- creates `otl_v1_config.ini` with otl platform address configuration
+- creates link to current command in postprocessing `pp_cmd` directory 
 
-2. Configure connection to platform in `otl_v1_config.ini`
+2. Configure `otl_v1` command. Example:  
+```bash
+    vi ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/otl_v1/config.ini
+```
+Config example:  
+```ini
+[spark]
+base_address = http://localhost
+username = admin
+password = 12345678
 
-### Test {{command_name}}
-Use `pp` to test {{command_name}} command:  
+[caching]
+# 24 hours in seconds
+login_cache_ttl = 86400
+# Command syntax defaults
+default_request_cache_ttl = 100
+default_job_timeout = 100
+```
+
+3. Configure storages for `readFile` and `writeFile` commands:  
+```bash
+   vi ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/readFile/config.ini
+   
+```
+Config example:  
+```ini
+[storages]
+lookups = /opt/otp/lookups
+pp_shared = /opt/otp/shared_storage/persistent
+```
+
+### Run {{command_name}}
+Use `pp` to run {{command_name}} command:  
 ```bash
 pp
 Storage directory is /tmp/pp_cmd_test/storage
