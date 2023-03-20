@@ -13,6 +13,28 @@ all:
 VERSION := "0.0.1"
 BRANCH := $(shell git name-rev $$(git rev-parse HEAD) | cut -d\  -f2 | sed -re 's/^(remotes\/)?origin\///' | tr '/' '_')
 
+CONDA = conda/miniconda/bin/conda
+ENV_PYTHON = venv/bin/python3.9
+
+
+conda/miniconda.sh:
+	echo Download Miniconda
+	mkdir -p conda
+	wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.1.0-1-Linux-x86_64.sh -O conda/miniconda.sh; \
+
+conda/miniconda: conda/miniconda.sh
+	bash conda/miniconda.sh -b -p conda/miniconda; \
+
+install_conda: conda/miniconda
+
+conda/miniconda/bin/conda-pack: conda/miniconda
+	conda/miniconda/bin/conda install conda-pack -c conda-forge  -y
+
+install_conda_pack: conda/miniconda/bin/conda-pack
+
+clean_conda:
+	rm -rf ./conda
+
 pack: make_build
 	rm -f {{command_name}}-*.tar.gz
 	echo Create archive \"{{command_name}}-$(VERSION)-$(BRANCH).tar.gz\"
@@ -39,11 +61,10 @@ make_build:
 clean_build:
 	rm -rf make_build
 
-venv:
-	echo Create venv;
-	conda create --copy -p ./venv -y
-	conda install -p ./venv python==3.9.7 -y
-	./venv/bin/pip install --no-input  postprocessing_sdk --extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple --trusted-host s.dev.isgneuro.com
+venv: conda/miniconda
+	$(CONDA) create --copy -p ./venv -y
+	$(CONDA) install -p ./venv python==3.9.7 -y;
+	$(ENV_PYTHON) -m pip  install --no-input  postprocessing_sdk --extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple --trusted-host s.dev.isgneuro.com
 
 clean_venv:
 	rm -rf ./venv
