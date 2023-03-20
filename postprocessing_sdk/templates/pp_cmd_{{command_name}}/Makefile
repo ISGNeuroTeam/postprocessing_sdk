@@ -72,6 +72,8 @@ clean_venv:
 dev: venv
 	rm -rf ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/{{command_name}}
 	./venv/bin/pp_sdk createcommandlinks
+	cp ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/otl_v1/config.example.ini ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/otl_v1/config.ini
+	cp ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/readFile/config.example.ini ./venv/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/readFile/config.ini
 
 clean: clean_build clean_pack clean_test clean_venv
 
