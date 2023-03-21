@@ -7,7 +7,7 @@ all:
  build - build project into build directory, with configuration file and environment\n\
  clean - clean all addition file, build directory and output archive file\n\
  test - run all tests\n\
- pack - make output archive, file name format \"{{command_name}}_vX.Y.Z_BRANCHNAME.tar.gz\"\n\
+ pack - make output archive, file name format \"pp_cmd_{{command_name}}_vX.Y.Z_BRANCHNAME.tar.gz\"\n\
 "
 
 VERSION := "0.1.0"
@@ -36,16 +36,16 @@ clean_conda:
 	rm -rf ./conda
 
 pack: make_build
-	rm -f {{command_name}}-*.tar.gz
-	echo Create archive \"{{command_name}}-$(VERSION)-$(BRANCH).tar.gz\"
-	cd make_build; tar czf ../{{command_name}}-$(VERSION)-$(BRANCH).tar.gz {{command_name}}
+	rm -f pp_cmd_{{command_name}}-*.tar.gz
+	echo Create archive \"pp_cmd_{{command_name}}-$(VERSION)-$(BRANCH).tar.gz\"
+	cd make_build; tar czf ../pp_cmd_{{command_name}}-$(VERSION)-$(BRANCH).tar.gz {{command_name}}
 
 clean_pack:
-	rm -f {{command_name}}-*.tar.gz
+	rm -f pp_cmd_{{command_name}}-*.tar.gz
 
 
-{{command_name}}.tar.gz: build
-	cd make_build; tar czf ../{{command_name}}.tar.gz {{command_name}} && rm -rf ../make_build
+pp_cmd_{{command_name}}.tar.gz: build
+	cd make_build; tar czf ../pp_cmd_{{command_name}}.tar.gz {{command_name}} && rm -rf ../make_build
 
 build: make_build
 

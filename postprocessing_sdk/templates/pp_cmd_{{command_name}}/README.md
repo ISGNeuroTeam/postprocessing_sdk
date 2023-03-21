@@ -67,4 +67,6 @@ Storage directory is /tmp/pp_cmd_test/storage
 Commmands directory is /tmp/pp_cmd_test/pp_cmd
 query: | otl_v1 <# makeresults count=100 #> |  {{command_name}} 
 ```
-
+## Deploy
+1. Unpack archive `pp_cmd_{{command_name}}` to postprocessing commands directory
+2. Configure config.ini if command need it.
