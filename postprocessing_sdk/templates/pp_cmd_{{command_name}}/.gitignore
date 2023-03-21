@@ -160,3 +160,4 @@ cython_debug/
 pp_cmd/
 storage/
 otl_v1_config.ini
+config.ini
