@@ -10,7 +10,7 @@ all:
  pack - make output archive, file name format \"{{command_name}}_vX.Y.Z_BRANCHNAME.tar.gz\"\n\
 "
 
-VERSION := "0.0.1"
+VERSION := "0.1.0"
 BRANCH := $(shell git name-rev $$(git rev-parse HEAD) | cut -d\  -f2 | sed -re 's/^(remotes\/)?origin\///' | tr '/' '_')
 
 CONDA = conda/miniconda/bin/conda
