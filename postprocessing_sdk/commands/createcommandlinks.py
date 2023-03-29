@@ -30,7 +30,7 @@ def create_command_links(directory):
                 continue
 
             cls = module.__getattribute__(module.__all__[0])
-            if cls.__base__ == pp_exec_env.base_command.BaseCommand:
+            if isinstance(cls, type) and issubclass(cls, pp_exec_env.base_command.BaseCommand):
                 try:
                     os.symlink(Path(root), POST_PROC_COMMAND_DIR / module_name, target_is_directory=True)
                     print(f"Success: Added {module_name} command")
@@ -47,7 +47,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             'dir',
-            help='Directory where to create command links', default=None, nargs='?'
+            help='Directory where to create command links, default is current directory', default=None, nargs='?'
         )
 
     def handle(self, *args, **options):
