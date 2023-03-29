@@ -18,7 +18,7 @@ package_dir_option = {
 
 setup(
     name='postprocessing_sdk',
-    version='1.2.{{}}1',
+    version='1.3.{{}}0',
     description='SDK for creating postprocessing commands',
     author='Artem Zenkov',
     author_email='azenkov@isgneuro.com',

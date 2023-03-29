@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2023-03-29
+### Added
+- Added jenkinsfile, changelog, releasenotes and license to command template
+- csv type to write command
+
+### Changed
+- Download and use conda in command makefile template
+- pp_exec_env version up to 1.4.8
+- pp_stdlib version up to 0.2.1
+
+### Fixed
+- Fix error in BaseCommand subclass checking
+### Removed
+- Removed otl_v1_config.ini from command template
+
+
 ## [1.2.1] - 2023-01-16
 ### Changed
 - Set 500  max rows and columns for dataframe
