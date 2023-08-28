@@ -1,7 +1,7 @@
 import os
 import sys
 from pathlib import Path
-from .basecommand import BaseCommand, CommandError,  POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
+from basecommand import BaseCommand, CommandError,  POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
 from jinja2 import Template
 
 
@@ -24,10 +24,10 @@ class Command(BaseCommand):
     @staticmethod
     def validate_name(name):
         """
-        Validates command name name, raises CommandError if command name is invalid
+        Validates command name `name`, raises CommandError if command name is invalid
         """
         if name is None:
-            raise CommandError('you must provide a name')
+            raise CommandError('Please provide a non-empty name.')
         # Check it's a valid directory name.
         if not name.isidentifier():
             raise CommandError(
@@ -60,7 +60,7 @@ class Command(BaseCommand):
         print(f'Command repository with name {command_repo} created')
 
     def render_dir(self, template_directory_path, command_directory_path, context):
-        print(f'Create directory {str(template_directory_path)}')
+        print(f'Create directory {str(command_directory_path)}')
         # create directory command_directory_path
         command_directory_path.mkdir(parents=True, exist_ok=True)
 
