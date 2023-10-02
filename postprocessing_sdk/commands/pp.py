@@ -41,7 +41,7 @@ class Completer:
         """
         cmds = self.syntax.keys()
         current = text.split("|")[-1]
-        if len(current) != 0 and re.match("\s", current[-1]) is None:
+        if len(current) != 0 and re.match("\\s", current[-1]) is None:
             return Completer.nth(filter(lambda s: s.startswith(current.strip()), cmds), state, default=None)
         return Completer.nth(cmds, state, None)
 
@@ -109,9 +109,9 @@ class Command(BaseCommand):
 
         while True:
             otl_query = input('query: ')
-            if otl_query == '\q' or otl_query == 'exit':
+            if otl_query == r'\q' or otl_query == 'exit':
                 exit(0)
-            if otl_query == '\?' or otl_query == 'help':
+            if otl_query == r'\?' or otl_query == 'help':
                 self.print_help()
             else:
                 self.run_otl(otl_query, storage, commands_dir, platform_envs)
@@ -146,7 +146,7 @@ class Command(BaseCommand):
         command_help.append(f"\t\tuse_timewindow: {command_syntax_dict['use_timewindow']}")
         return '\n'.join(command_help)
 
-    def run_otl(self, otl_query, storage, commands_dir=None, platform_envs=None):
+    def run_otl(self, otl_query, storage, commands_dir=None, platform_envs=None) -> pd.DataFrame:
         command_executor = self.command_executor
         # set dev storage for all user commands
         for command_class in command_executor.command_classes.keys():
@@ -182,14 +182,14 @@ class Command(BaseCommand):
             except OTLException as err:
                 print('Translation error')
                 print(err)
-                return
+                return pd.DataFrame()
             commands = list(
                 map(
                     lambda command: command.to_dict(),
                     commands
                 )
             )
-            df = command_executor.execute(commands, platform_envs)
+            df: pd.DataFrame = command_executor.execute(commands, platform_envs)
             print(df)
             return df
         except Exception as err:
