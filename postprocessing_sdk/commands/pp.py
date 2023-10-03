@@ -41,7 +41,7 @@ class Completer:
         """
         cmds = self.syntax.keys()
         current = text.split("|")[-1]
-        if len(current) != 0 and re.match("\\s", current[-1]) is None:
+        if len(current) != 0 and re.match("\s", current[-1]) is None:
             return Completer.nth(filter(lambda s: s.startswith(current.strip()), cmds), state, default=None)
         return Completer.nth(cmds, state, None)
 
