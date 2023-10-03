@@ -1,7 +1,7 @@
 import os
 import sys
 from pathlib import Path
-from basecommand import BaseCommand, CommandError,  POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
+from .basecommand import BaseCommand, CommandError,  POST_PROC_SRC_DIR, POST_PROC_COMMAND_DIR, POST_PROC_COMMAND_DIR_NAME
 from jinja2 import Template
 
 
