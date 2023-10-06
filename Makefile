@@ -42,7 +42,7 @@ create_env: $(CONDA_FOLDER)/miniconda/ install_conda_pack
 	echo Create environment
 	$(CONDA) create -p $(ENV) -y
 	$(CONDA) install -p $(ENV) python==3.9.7 -y
-	$(ENV_PYTHON) -m pip install --no-cache-dir  --no-input -r requirements.txt \
+	$(ENV_PYTHON) -m pip install --no-cache-dir --no-input -r requirements.txt \
 	--extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple \
 	--trusted-host s.dev.isgneuro.com
 
