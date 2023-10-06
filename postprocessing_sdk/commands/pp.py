@@ -191,6 +191,7 @@ class Command(BaseCommand):
             )
             df: pd.DataFrame = command_executor.execute(commands, platform_envs)
             print(df)
+            return df
         except Exception as err:
             tb = traceback.format_exc()
             print(tb)
