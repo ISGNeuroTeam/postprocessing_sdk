@@ -146,7 +146,8 @@ class Command(BaseCommand):
         command_help.append(f"\t\tuse_timewindow: {command_syntax_dict['use_timewindow']}")
         return '\n'.join(command_help)
 
-    def run_otl(self, otl_query, storage, commands_dir=None, platform_envs=None) -> pd.DataFrame:
+    def run_otl(self, otl_query, storage, commands_dir=None, platform_envs=None, raise_error: bool = False,
+                df_print: bool = True) -> pd.DataFrame:
         command_executor = self.command_executor
         # set dev storage for all user commands
         for command_class in command_executor.command_classes.keys():
@@ -182,7 +183,8 @@ class Command(BaseCommand):
             except OTLException as err:
                 print('Translation error')
                 print(err)
-                return pd.DataFrame()
+                if raise_error:
+                    raise OTLException('Translation error')
             commands = list(
                 map(
                     lambda command: command.to_dict(),
@@ -190,9 +192,11 @@ class Command(BaseCommand):
                 )
             )
             df: pd.DataFrame = command_executor.execute(commands, platform_envs)
-            print(df)
+            print_df(df, do_print=df_print)
             return df
         except Exception as err:
+            if raise_error:
+                raise err
             tb = traceback.format_exc()
             print(tb)
 
@@ -211,6 +215,9 @@ class Command(BaseCommand):
         result_message = command_message + ' ' + stage_message + ' ' + message
         print(result_message)
 
+def print_df(string: str, do_print: bool) -> None:
+    if do_print:
+        print(string)
 
 def main():
     command = Command()
