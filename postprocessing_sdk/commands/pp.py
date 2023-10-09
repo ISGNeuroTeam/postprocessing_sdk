@@ -195,6 +195,7 @@ class Command(BaseCommand):
         except Exception as err:
             tb = traceback.format_exc()
             print(tb)
+            return pd.DataFrame()
 
     @staticmethod
     def progress_notifier(
