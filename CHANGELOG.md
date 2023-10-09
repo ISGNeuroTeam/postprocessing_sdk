@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.3] - 2023-10-09
 ### Changed
-- added return of empty pd.Dataframe when Exception raised in run_otl()
+- removed return empty pd.Dataframe() in any error
+- added bool parameter `df_print` to control printing calculated dataframe (for testing purposes)
+- added bool parameter 'raise_error' to control raising errors (for testing purposes) 
 
 ## [1.3.2] - 2023-10-06
 ### Changed
