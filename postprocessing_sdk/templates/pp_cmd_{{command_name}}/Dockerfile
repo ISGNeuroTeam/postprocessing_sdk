@@ -14,8 +14,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 
 # Install dependencies
-RUN pip install --no-cache-dir --extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple --trusted-host s.dev.isgneuro.com postprocessing-sdk
-RUN pip install --no-cache-dir  -r requirements.txt
+RUN pip install --extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple --trusted-host s.dev.isgneuro.com postprocessing-sdk
+RUN pip install -r requirements.txt
 
 # Copy source code
 COPY . /app
