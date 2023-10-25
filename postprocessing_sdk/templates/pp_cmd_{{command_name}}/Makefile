@@ -78,7 +78,6 @@ dev: venv
 clean: clean_build clean_pack clean_test clean_venv
 
 test:
-	test:
 	docker build --progress=plain --no-cache -t pp_cmd_{{command_name}}_test . && docker run -it pp_cmd_{{command_name}}_test
 
 clean_test:
