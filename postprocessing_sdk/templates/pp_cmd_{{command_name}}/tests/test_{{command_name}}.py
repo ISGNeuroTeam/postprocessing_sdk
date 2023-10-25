@@ -1,6 +1,6 @@
 """Module for testing {{command_name}} command"""
 import os
-from hypothesis import given, strategies as st
+# from hypothesis import given, strategies as st # use it to decrease amount of tests
 import pandas as pd
 from pytest import raises
 from unittest import TestCase
