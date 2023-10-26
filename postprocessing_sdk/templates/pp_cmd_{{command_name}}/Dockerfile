@@ -10,18 +10,8 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory
 WORKDIR /app
 
-# Copy reqiurements
-COPY requirements.txt /app/requirements.txt
-
 # Install dependencies
 RUN pip install --extra-index-url http://s.dev.isgneuro.com/repository/ot.platform/simple --trusted-host s.dev.isgneuro.com postprocessing-sdk
-RUN pip install -r requirements.txt
 
 # Copy source code
 COPY . /app
-
-# Copy readFile config.ini if you use readFile command
-#COPY tests/config.ini  /usr/local/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/readFile/config.ini
-
-# Run tests
-ENTRYPOINT ["pytest"]
