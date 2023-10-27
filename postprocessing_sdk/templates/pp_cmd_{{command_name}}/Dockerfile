@@ -17,4 +17,4 @@ RUN pip install --extra-index-url http://s.dev.isgneuro.com/repository/ot.platfo
 COPY . /app
 
 # Copy readFile config.ini
-COPY tests/config.ini  /usr/local/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/readFile/config.ini
+COPY tests/storage/config.ini  /usr/local/lib/python3.9/site-packages/postprocessing_sdk/pp_cmd/readFile/config.ini
