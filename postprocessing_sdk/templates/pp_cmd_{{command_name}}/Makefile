@@ -78,7 +78,7 @@ dev: venv
 clean: clean_build clean_pack clean_test clean_venv
 
 test:
-	docker build --progress=plain -t pp_cmd_{{command_name}}_test:001 . && docker run -it pp_cmd_{{command_name}}_test:001 python -m unittest tests/test_{{command_name}}.py
+	docker build --progress=plain -t pp_cmd_{{command_name}}_test:$(VERSION) . && docker run -v $$(pwd):/app -it pp_cmd_{{command_name}}_test:$(VERSION) python -m unittest tests/test_{{command_name}}.py
 
 clean_test:
 	@echo "Clean tests"
