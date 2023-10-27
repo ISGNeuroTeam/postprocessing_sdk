@@ -33,4 +33,10 @@ class TestCommand(TestCase):
         # check if sample and result are the same
         pd.testing.assert_frame_equal(sample, result)
 
+    def test_readfile_and_{{command_name}}_command():
+        sample = pd.DataFrame()
+        otl_query = '| readFile example_002.csv type=csv storage=pp_storage | {{command_name}} first_positional_argument'
+        result = self.result = self.run_otl(otl_query=otl_query)
+        # check if sample and result are the same
+        pd.testing.assert_frame_equal(sample, result)
 
