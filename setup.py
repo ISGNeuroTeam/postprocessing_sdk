@@ -18,14 +18,14 @@ package_dir_option = {
 
 setup(
     name='postprocessing_sdk',
-    version='1.3.{{}}3',
+    version='1.4.0',
     description='SDK for creating postprocessing commands',
     author='Artem Zenkov',
     author_email='azenkov@isgneuro.com',
     package_dir=package_dir_option,
     packages=[str(key) for key in package_dir_option.keys()],
     package_data={'postprocessing_sdk': [
-        'templates/*', 'templates/*/*', 'templates/*/*/*', 'templates/pp_cmd_{{command_name}}/.gitignore',
+        'templates/*', 'templates/*/*', 'templates/*/*/*', 'templates/*/*/*/*', 'templates/pp_cmd_{{command_name}}/.gitignore',
         "pp_cmd/*/*",
     ]},
     entry_points={
@@ -38,4 +38,3 @@ setup(
     zip_safe=False,
     install_requires=requirements,
 )
-
